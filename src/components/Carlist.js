@@ -6,6 +6,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import AddCar from './AddCar.js';
 
 class Carlist extends Component {
     constructor(props) {
@@ -57,6 +58,19 @@ class Carlist extends Component {
         })
     }
 
+    // add new car
+    addCar(car) {
+        fetch(SERVER_URL + 'api/cars', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(car)
+        })
+        .then(res => this.fetchCars())
+        .catch(err => console.log(err));
+    }
+
     render() {
         const columns = [{
             Header: 'Brand',
@@ -86,6 +100,7 @@ class Carlist extends Component {
         }]
         return (
             <div className='App'>
+                <AddCar addCar={this.addCar} fetchCars={this.fetchCars}/>
                 <ReactTable data={this.state.cars} columns={columns}
                 filterable={true}/>
                 <ToastContainer autoClose={2000}/>
