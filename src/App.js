@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Carlist from './components/Carlist';
+import Carlist from './components/Carlist.js';
 
 class App extends Component {
   render() {
