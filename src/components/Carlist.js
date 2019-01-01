@@ -10,12 +10,23 @@ class Carlist extends Component {
     }
 
     componentDidMount() {
+        this.fetchCars();
+    }
+
+    fetchCars = () => {
         fetch(SERVER_URL + 'api/cars')
         .then((response) => response.json())
         .then((responseData) => {
             this.setState({cars: responseData._embedded.cars})
         })
         .catch(err => console.error(err));
+    }
+
+    // delete car
+    onDelClick = (link) => {
+        fetch(link, {method: 'DELETE'})
+        .then(res => this.fetchCars())
+        .catch(err => console.log(err));
     }
 
     render() {
@@ -34,6 +45,16 @@ class Carlist extends Component {
         }, {
             Header: 'Price $',
             accessor: 'price'
+        }, {
+            id: 'delbutton',
+            sortable: false,
+            filterable: false,
+            width: 100,
+            accessor: '_links.self.href',
+            Cell: ({value}) => (<button
+            onClick={() => {this.onDelClick(value)}}>
+            Delete
+            </button>)
         }]
         return (
             <div className='App'>
