@@ -173,6 +173,9 @@ class Carlist extends Component {
                     <Grid item style={{padding: 20}}>
                         <CSVLink data={this.state.cars} separator=';'>Export CSV</CSVLink>
                     </Grid>
+                    <Grid item>
+                        <h3>Hello, {this.props.user}</h3>
+                    </Grid>
                 </Grid>
 
                 <ReactTable data={this.state.cars} columns={columns}
