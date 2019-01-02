@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import {SERVER_URL} from '../constants.js'
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import AddCar from './AddCar.js';
 import {CSVLink} from 'react-csv';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import SnackBar from '@material-ui/core/Snackbar';
 
 class Carlist extends Component {
     constructor(props) {
         super(props);
-        this.state = {cars: []};
+        this.state = {cars: [], open: false, message: ''};
     }
 
     componentDidMount() {
@@ -34,15 +33,11 @@ class Carlist extends Component {
     onDelClick = (link) => {
         fetch(link, {method: 'DELETE'})
         .then(res => {
-            toast.success("Car deleted", {
-                position: toast.POSITION.BOTTOM_LEFT
-            });
+            this.setState({open: true, message: 'Car deleted'});
             this.fetchCars()
         })
         .catch(err => {
-            toast.error('Error when deleting', {
-                position: toast.POSITION.BOTTOM_LEFT
-            });
+            this.setState({open: true, message: 'Error when deleting'});
             console.log(err)
         });
     }
@@ -103,15 +98,15 @@ class Carlist extends Component {
             body: JSON.stringify(car)
         })
         .then(res =>
-            toast.success("Change saved", {
-                position: toast.POSITION.BOTTOM_LEFT
-            })
+            this.setState({open: true, message: 'Changes saved'})
         )
         .catch(err =>
-            toast.error("Error when saving", {
-                position: toast.POSITION.BOTTOM_LEFT
-            })
+            this.setState({open: true, message: 'Error when saving'})
         )
+    }
+
+    handleClose = (event, reason) => {
+        this.setState({open: false});
     }
 
     render() {
@@ -171,7 +166,9 @@ class Carlist extends Component {
 
                 <ReactTable data={this.state.cars} columns={columns}
                 filterable={true}/>
-                <ToastContainer autoClose={2000}/>
+                <SnackBar
+                open={this.state.open} onClose={this.handleClose}
+                autoHideDuration={1000} message={this.state.message}/>
             </div>
         );
     }

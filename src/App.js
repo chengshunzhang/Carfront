@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import Carlist from './components/Carlist.js';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">CarList</h1>
-        </header>
+        <AppBar position='static' color='default'>
+          <Toolbar>CarList</Toolbar>
+        </AppBar>
         <Carlist />
       </div>
     );
