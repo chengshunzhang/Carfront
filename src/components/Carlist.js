@@ -59,7 +59,7 @@ class Carlist extends Component {
     }
 
     // add new car
-    addCar(car) {
+    addCar = (car) => {
         fetch(SERVER_URL + 'api/cars', {
             method: 'POST',
             headers: {
@@ -71,22 +71,67 @@ class Carlist extends Component {
         .catch(err => console.log(err));
     }
 
+    renderEditable = (cellInfo) => {
+        return (
+            <div
+                style={{backgroundColor: "#fcfcfc"}}
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={e => {
+                    const data = [...this.state.cars];
+                    data[cellInfo.index][cellInfo.column.id] =
+                    e.target.innerHTML;
+                    this.setState({cars: data});
+                }}
+                dangerouslySetInnerHTML={{
+                    __html: this.state.cars[cellInfo.index][cellInfo.column.id]
+                }}
+            />
+        );
+    }
+
+    // update car
+    updateCar = (link, car) => {
+        fetch(link, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(car)
+        })
+        .then(res =>
+            toast.success("Change saved", {
+                position: toast.POSITION.BOTTOM_LEFT
+            })
+        )
+        .catch(err =>
+            toast.error("Error when saving", {
+                position: toast.POSITION.BOTTOM_LEFT
+            })
+        )
+    }
+
     render() {
         const columns = [{
             Header: 'Brand',
-            accessor: 'brand'
+            accessor: 'brand',
+            Cell: this.renderEditable
         }, {
             Header: 'Model',
-            accessor: 'model'
+            accessor: 'model',
+            Cell: this.renderEditable
         }, {
             Header: 'Color',
-            accessor: 'color'
+            accessor: 'color',
+            Cell: this.renderEditable
         }, {
             Header: 'Year',
-            accessor: 'year'
+            accessor: 'year',
+            Cell: this.renderEditable
         }, {
             Header: 'Price $',
-            accessor: 'price'
+            accessor: 'price',
+            Cell: this.renderEditable
         }, {
             id: 'delbutton',
             sortable: false,
@@ -97,6 +142,17 @@ class Carlist extends Component {
             onClick={() => {this.confirmDelete(value)}}>
             Delete
             </button>)
+        }, {
+            id: 'savebutton',
+            sortable: false,
+            filterable: false,
+            width: 100,
+            accessor: '_links.self.href',
+            Cell: ({value, row}) => (
+                <button onClick={() => this.updateCar(value, row)}>
+                    Save
+                </button>
+            )
         }]
         return (
             <div className='App'>
