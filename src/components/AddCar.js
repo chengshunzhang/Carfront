@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import SkyLight from 'react-skylight';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class AddCar extends Component {
     constructor(props) {
@@ -33,25 +35,28 @@ class AddCar extends Component {
                 <SkyLight hideOnOverlayClicked ref='addDialog'>
                     <h3>New Car</h3>
                     <form>
-                        <input type='text' placeholder='Brand'
+                        <TextField label='Brand' placeholder='Brand'
                         name='brand' onChange={this.handleChange}/><br/>
-                        <input type='text' placeholder='Model'
+                        <TextField label='Model' placeholder='Model'
                         name='model' onChange={this.handleChange}/><br/>
-                        <input type='text' placeholder='Color'
+                        <TextField label='Color' placeholder='Color'
                         name='color' onChange={this.handleChange}/><br/>
-                        <input type='text' placeholder='Year'
+                        <TextField label='Year' placeholder='Year'
                         name='year' onChange={this.handleChange}/><br/>
-                        <input type='text' placeholder='Price'
+                        <TextField label='Price' placeholder='Price'
                         name='price' onChange={this.handleChange}/><br/>
-                        <button onClick={this.handleSubmit}>Save</button>
-                        <button onClick={this.cancelSubmit}>Cancel</button>
+                        <Button variant='outlined' color='primary'
+                        onClick={this.handleSubmit}>Save</Button>
+                        <Button variant='outlined' color='secondary'
+                        onClick={this.cancelSubmit}>Cancel</Button>
                     </form>
                 </SkyLight>
                 <div>
-                    <button style={{'margin': '10px'}}
+                    <Button variant='raised' color='primary'
+                    style={{'margin': '10px'}}
                     onClick={() => this.refs.addDialog.show()}>
                     New car
-                    </button>
+                    </Button>
                 </div>
             </div>
         )

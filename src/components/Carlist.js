@@ -8,6 +8,8 @@ import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import AddCar from './AddCar.js';
 import {CSVLink} from 'react-csv';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 class Carlist extends Component {
     constructor(props) {
@@ -139,10 +141,10 @@ class Carlist extends Component {
             filterable: false,
             width: 100,
             accessor: '_links.self.href',
-            Cell: ({value}) => (<button
+            Cell: ({value}) => (<Button size='small' variant='flat' color='secondary'
             onClick={() => {this.confirmDelete(value)}}>
-            Delete
-            </button>)
+                Delete
+            </Button>)
         }, {
             id: 'savebutton',
             sortable: false,
@@ -150,15 +152,23 @@ class Carlist extends Component {
             width: 100,
             accessor: '_links.self.href',
             Cell: ({value, row}) => (
-                <button onClick={() => this.updateCar(value, row)}>
+                <Button size='small' variant='flat' color='primary'
+                onClick={() => this.updateCar(value, row)}>
                     Save
-                </button>
+                </Button>
             )
         }]
         return (
             <div className='App'>
-                <CSVLink data={this.state.cars} separator=';'>Export CSV</CSVLink>
-                <AddCar addCar={this.addCar} fetchCars={this.fetchCars}/>
+                <Grid container>
+                    <Grid item>
+                        <AddCar addCar={this.addCar} fetchCars={this.fetchCars}/>
+                    </Grid>
+                    <Grid item style={{padding: 20}}>
+                        <CSVLink data={this.state.cars} separator=';'>Export CSV</CSVLink>
+                    </Grid>
+                </Grid>
+
                 <ReactTable data={this.state.cars} columns={columns}
                 filterable={true}/>
                 <ToastContainer autoClose={2000}/>
