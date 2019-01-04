@@ -1,3 +1,7 @@
+This repo is the frontend for Car Database Application and is developed in React.
+The frontend shows the information of cars in database with CRUD functionalities. It also implements the login functionality
+in accordance with the JWT authentication in backend. Only the users in database can successfully login and have access to the data.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
