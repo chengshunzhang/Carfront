@@ -2,10 +2,9 @@ This repo is the frontend for Car Database Application and is developed in React
 The frontend shows the information of cars in database with CRUD functionalities. It also implements the login functionality
 in accordance with the JWT authentication in backend. Only the users in database can successfully login and have access to the data.
 
-After the server is run, you start the application and go to the login page shown below.  
+After the server is run in the backend, you start the application and go to the login page shown below.  
 ![error](https://github.com/chengshunzhang/Carfront/blob/master/img/image_login.png)  
-After login, you can have access to the data in the database and you can also add, delete, update data or export the data as  
-CSV file to your local position.  
+After login, you can have access to the data in the database and you can also add, delete, update, or export data.
 ![error](https://github.com/chengshunzhang/Carfront/blob/master/img/image_data.png)  
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
